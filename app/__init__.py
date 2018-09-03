@@ -1,18 +1,7 @@
 from flask import Flask
+from config import Config
 
-from app.modules.book import db
+app = Flask(__name__)
+app.config.from_object(Config)
 
-
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object('app.secure')
-    app.config.from_object('app.setting')
-    register_blueprint(app)
-    db.init_app(app)
-    db.create_all(app=app)
-    return app
-
-
-def register_blueprint(app):
-    from app.web import web
-    app.register_blueprint(web)
+from app import routes
