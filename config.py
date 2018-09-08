@@ -2,4 +2,6 @@ import os
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+    SECRET_KEY ='you-will-never-guess'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:GSSG255211@localhost:3306/cdut2016?charset=utf8mb4'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
