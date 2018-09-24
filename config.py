@@ -18,3 +18,5 @@ class Config(object):
     MAIL_USE_TLS = False
     MAIL_USERNAME = 'cdut@anlan.club'
     MAIL_PASSWORD = 'GSSG255211dud'
+    #
+    # LANGUAGES = ['en', 'zh-cn']
