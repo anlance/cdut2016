@@ -1,6 +1,29 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+{% block head %}
+    {{ super() }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script type="text/javascript">
+    $('#deadtime_day').datepicker({
+        weekStart: 7,
+        autoclose: true,
+        todayHighlight: 1,
+        todayBtn : true,  //在底部是否显示今天
+        format: "yyyy-mm-dd",
+        defaultDate: "2019-1-1",
+        language: "zh-CN"
+
+    });
+    </script>
+{% endblock %}
+
 {% block app_content %}
     <h1>{{ _('Edit Profile') }}</h1>
     <div class="row">

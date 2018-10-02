@@ -14,11 +14,14 @@ from app import login, db
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(40), unique=True)
+    username = db.Column(db.String(40))
     password = db.Column(db.String(160))
     email = db.Column(db.String(120), unique=True)
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    identity = db.Column(db.String(100))
+    deadtime_info = db.Column(db.String(140))
+    deadtime_day = db.Column(db.DateTime)
 
     def __init__(self, username, password, email):
         self.username = username
@@ -50,6 +53,23 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
+    def set_identity(self, identity):
+        self.identity = identity
+
+    def get_identity(self):
+        return self.identity
+
+    def set_deadtime_info(self, deadtime_info):
+        self.deadtime_info = deadtime_info
+
+    def get_deadtime_info(self):
+        return self.deadtime_info
+
+    def set_deadtime_day(self, deadtime_day):
+        self.deadtime_day = deadtime_day
+
+    def get_deadtime_day(self):
+        return self.deadtime_day
 
 @login.user_loader
 def load_user(id):
