@@ -19,4 +19,22 @@ class Config(object):
     MAIL_USERNAME = 'cdut@anlan.club'
     MAIL_PASSWORD = 'GSSG255211dud'
     #
-    # LANGUAGES = ['en', 'zh-cn']
+    # LANGUAGES = ['en', 'zh-cn']POSTS_PER_PAGE = 3
+
+    NEWS_PER_PAGE = 5
+
+    SCHEDULER_API_ENABLED = True
+    # JOBS = [
+    #     {
+    #         'id': 'job1',
+    #         'func': 'app.task:save',
+    #         'args': '',
+    #         'trigger': {
+    #             'type': 'cron',
+    #             'second': '*/(60*60)'
+    #         }
+    #
+    #     }
+    # ]
+
+

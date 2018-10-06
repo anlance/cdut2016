@@ -4,8 +4,7 @@ from time import time
 
 import jwt
 from flask import current_app
-from flask_login import UserMixin, current_user
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login, db
@@ -53,23 +52,42 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
-    def set_identity(self, identity):
-        self.identity = identity
+    # def set_identity(self, identity):
+    #     self.identity = identity
+    #
+    # def get_identity(self):
+    #     return self.identity
+    #
+    # def set_deadtime_info(self, deadtime_info):
+    #     self.deadtime_info = deadtime_info
+    #
+    # def get_deadtime_info(self):
+    #     return self.deadtime_info
+    #
+    # def set_deadtime_day(self, deadtime_day):
+    #     self.deadtime_day = deadtime_day
+    #
+    # def get_deadtime_day(self):
+    #     return self.deadtime_day
 
-    def get_identity(self):
-        return self.identity
 
-    def set_deadtime_info(self, deadtime_info):
-        self.deadtime_info = deadtime_info
+class NewsConfig(db.Model):
+    __tablename__ = 'newsconfig'
+    id = db.Column(db.Integer, primary_key=True)
+    cdut_total = db.Column(db.Integer)
+    cdut_page_n = db.Column(db.Integer)
 
-    def get_deadtime_info(self):
-        return self.deadtime_info
+    def __init__(self, id, cdut_total, cdut_page_n):
+        self.id = id
+        self.cdut_total = cdut_total
+        self.cdut_page_n = cdut_page_n
 
-    def set_deadtime_day(self, deadtime_day):
-        self.deadtime_day = deadtime_day
+    # def set_cdut_total(self, cdut_total):
+    #     self.cdut_total = cdut_total
+    #
+    # def get_cdut_total(self):
+    #     return self.cdut_total
 
-    def get_deadtime_day(self):
-        return self.deadtime_day
 
 @login.user_loader
 def load_user(id):

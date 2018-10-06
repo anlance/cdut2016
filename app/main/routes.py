@@ -7,6 +7,7 @@ from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm
 from app.models import User
+from app.news_cdut.models import NewsCdut
 
 
 @bp.before_request
@@ -20,17 +21,9 @@ def before_request():
 @bp.route('/index')
 @login_required
 def index():
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home Page', posts=posts)
+    news_cdut = NewsCdut.query.filter(NewsCdut.id > 5).all()
+    print(news_cdut)
+    return render_template('index.html', title='Home Page', news_cdut=news_cdut)
 
 
 @bp.route('/user/<username>')
@@ -38,8 +31,8 @@ def index():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
+        {'model': user.username, 'info': '1'},
+        {'model': user.username, 'info': '2'}
     ]
     return render_template('user.html', user=user, posts=posts)
 

@@ -1,0 +1,16 @@
+<center><h4>教务处通知</h4></center>
+<a href="{{ url_for('news_cdut.more') }}" class="more"><i class="glyphicon glyphicon-share-alt"></i> more +</a>
+<hr>
+
+
+{% for news in news_cdut %}
+    <li style="padding-bottom: 5px"><a href="{{ news.origin_url }}" target="_blank">{{ news.info }}</a></li>
+{% endfor %}
+
+
+<style>
+    .more{
+        float: right;
+        color: lightgreen;
+    }
+</style>
