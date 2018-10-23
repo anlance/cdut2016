@@ -206,7 +206,6 @@
                     else{
                         add_text += '<div class="user_said">' + '<span style="font-weight: bolder">' + user_said[i].username +':</span><span >'+ user_said[i].said+'</span></div>'
                     }
-                    {#add_text += '<li style="padding-bottom: 5px">'+user_said[i].username +':'+ user_said[i].said+'</li>'#}
                 }
                 $("#showDiscuss").html(add_text);
                 $("#showDiscuss").animate({scrollTop: $("#showDiscuss")[0].scrollHeight}, 1000);
@@ -216,5 +215,4 @@
             }
         })
     }
-
 </script>

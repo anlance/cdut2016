@@ -7,8 +7,8 @@ from app.news_cdut.models import NewsCdut
 app = create_app()
 app.app_context().push()
 # 启动后台任务
-# scheduler.add_job(func='app.task:update_cdut', args='',trigger='interval', seconds=10, id='update')
-# scheduler.add_job(func='app.task:save', args='', trigger='interval', seconds=1800, id='cron_task')
+scheduler.add_job(func='app.task:init', args='', next_run_time=datetime.datetime.now(), id='init')
+scheduler.add_job(func='app.task:update_cdut', args='', trigger='interval', seconds=600, id='update')
 scheduler.start()
 app.run()
 

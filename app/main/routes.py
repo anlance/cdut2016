@@ -24,13 +24,7 @@ def before_request():
 @login_required
 def index():
     discuss_form = DiscussForm()
-    # if discuss_form.validate_on_submit():
-    #     username = discuss_form.username.data
-    #     said = discuss_form.said.data
-    #     discuss = Discuss(username=username, said=said)
-    #     db.session.add(discuss)
-    #     db.session.commit()
-    news_cdut = NewsCdut.query.filter(NewsCdut.id > 300).all()
+    news_cdut = NewsCdut.query.filter().order_by(NewsCdut.time.desc()).limit(5)
     user_said = Discuss.query.filter(Discuss.id > 1).all()
     today = get_today()
     return render_template('index.html', title='Home Page', news_cdut=news_cdut, today=today, user_said=user_said, discuss_form=discuss_form)
@@ -42,10 +36,12 @@ def add_discuss():
     data = json.loads(request.form.get('data'))
     username = data['username']
     said = data['said']
-    # try catch return error
-    discuss = Discuss(username=username, said=said)
-    db.session.add(discuss)
-    db.session.commit()
+    try:
+        discuss = Discuss(username=username, said=said)
+        db.session.add(discuss)
+        db.session.commit()
+    except Exception as err:
+        flash(err+":发送失败", 'info')
     user_said = Discuss.query.filter(Discuss.id > 1).all()
     print(user_said)
     return jsonify({"success": 200, "user_said": [i.serialize() for i in user_said]})
@@ -72,7 +68,7 @@ def edit_profile():
         current_user.deadtime_info = form.deadtime_info.data
         current_user.deadtime_day = form.deadtime_day.data
         db.session.commit()
-        flash('Your changes have been saved.')
+        flash('修改成功.', 'success')
         return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username

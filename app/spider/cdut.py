@@ -36,7 +36,7 @@ def init_news():
     # 获取首页的news
     cur_news, sum = get_onepage(url=url)
     # 去掉首页和第二页的重复news
-    cur_news_num = all_page * 10 - all_count
+    cur_news_num = all_count - len(news)
     for i in range(cur_news_num):
         news.append(cur_news[i])
     print(len(news))
@@ -49,10 +49,10 @@ def update_news(total):
     news = []
     cur_news, sum = get_onepage(url=url)
     if sum > total:
-        # news_num_update = sum - total
-        # print('--------')
-        # for i in range(news_num_update):
-        #     news.append(cur_news[i])
+        news_num_update = sum - total
+        print('--------')
+        for i in range(news_num_update):
+            news.append(cur_news[i])
         print(sum)
         print(total)
     return news

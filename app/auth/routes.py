@@ -20,7 +20,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('用户名或者密码错误', 'info')
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get(next)
@@ -45,7 +45,7 @@ def register():
         user = User(username=form.username.data, password=form.password.data, email=form.email.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Congratulations, 注册成功!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title='Register', form=form)
 
@@ -59,7 +59,7 @@ def reset_password_request():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password')
+        flash('检查您的电子邮件并按照指示重置您的密码', 'info')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password_request.html', title='Reset Password', form=form)
 
@@ -75,6 +75,6 @@ def reset_password(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password has been reset.')
+        flash('您的密码已重置.', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)

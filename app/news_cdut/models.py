@@ -1,6 +1,7 @@
 from app import db
 
 
+# 成都理工教务处消息
 class NewsCdut(db.Model):
     __tablename__ = 'newscdut'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -15,16 +16,4 @@ class NewsCdut(db.Model):
 
     def __repr__(self):
         return '<NewsCdut %r>' % self.info
-
-    # def set_origin_url(self, origin_url):
-    #     self.origin_url = origin_url
-    #
-    # def get_origin_url(self):
-    #     return self.origin_url
-    #
-    # def set_info(self, info):
-    #     self.info = info
-    #
-    # def get_info(self):
-    #     return self.info
 

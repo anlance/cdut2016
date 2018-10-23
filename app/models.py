@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import login, db
 
 
+# 用户
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -52,37 +53,8 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
-    # def set_identity(self, identity):
-    #     self.identity = identity
-    #
-    # def get_identity(self):
-    #     return self.identity
-    #
-    # def set_deadtime_info(self, deadtime_info):
-    #     self.deadtime_info = deadtime_info
-    #
-    # def get_deadtime_info(self):
-    #     return self.deadtime_info
-    #
-    # def set_deadtime_day(self, deadtime_day):
-    #     self.deadtime_day = deadtime_day
-    #
-    # def get_deadtime_day(self):
-    #     return self.deadtime_day
 
-
-class NewsConfig(db.Model):
-    __tablename__ = 'newsconfig'
-    id = db.Column(db.Integer, primary_key=True)
-    cdut_total = db.Column(db.Integer)
-    cdut_page_n = db.Column(db.Integer)
-
-    def __init__(self, id, cdut_total, cdut_page_n):
-        self.id = id
-        self.cdut_total = cdut_total
-        self.cdut_page_n = cdut_page_n
-
-
+# 留言
 class Discuss(db.Model):
     __tablename__ = 'discuss'
     id = db.Column(db.Integer, primary_key=True)

@@ -16,7 +16,7 @@ def more():
         info = form.info.data
         time = form.time.data
         news_cdut = NewsCdut.query.filter(and_(NewsCdut.info.like("%"+info+"%"), NewsCdut.time.like("%"+time+"%")))\
-            .order_by(NewsCdut.time.desc()).paginate(page, current_app.config['NEWS_PER_PAGE'], False)
+            .order_by(NewsCdut.time.desc()).paginate(page, 10, False)
         next_url = url_for('news_cdut.more', page=news_cdut.next_num) if news_cdut.has_next else None
         prev_url = url_for('news_cdut.more', page=news_cdut.prev_num) if news_cdut.has_prev else None
 
@@ -30,12 +30,12 @@ def more():
         if num_news == 0:
             num_page = 0
         if news_cdut:
-            flash('共检索到'+str(num_news)+'条('+str(num_page)+'页)数据')
+            flash('共检索到'+str(num_news)+'条('+str(num_page)+'页)数据', 'success')
             return render_template('news_cdut/more.html', news_cdut=news_cdut.items, next_url=next_url,
                                    prev_url=prev_url, form=form)
         return redirect(url_for('news_cdut.more'))
     elif request.method == 'GET':
-        news_cdut = NewsCdut.query.order_by(NewsCdut.time.desc()).paginate(page, current_app.config['NEWS_PER_PAGE'], False)
+        news_cdut = NewsCdut.query.order_by(NewsCdut.time.desc()).paginate(page, 10, False)
         next_url = url_for('news_cdut.more', page=news_cdut.next_num) if news_cdut.has_next else None
         prev_url = url_for('news_cdut.more', page=news_cdut.prev_num) if news_cdut.has_prev else None
         return render_template('news_cdut/more.html', news_cdut=news_cdut.items, next_url=next_url, prev_url=prev_url, form=form)

@@ -20,9 +20,6 @@ class Config(object):
     MAIL_PASSWORD = 'GSSG255211dud'
     #
     # LANGUAGES = ['en', 'zh-cn']POSTS_PER_PAGE = 3
-
-    NEWS_PER_PAGE = 5
-
     SCHEDULER_API_ENABLED = True
     # JOBS = [
     #     {
