@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(160))
     email = db.Column(db.String(120), unique=True)
     about_me = db.Column(db.String(140))
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.now)
     identity = db.Column(db.String(100))
     deadtime_info = db.Column(db.String(140))
     deadtime_day = db.Column(db.DateTime)
@@ -82,11 +82,21 @@ class NewsConfig(db.Model):
         self.cdut_total = cdut_total
         self.cdut_page_n = cdut_page_n
 
-    # def set_cdut_total(self, cdut_total):
-    #     self.cdut_total = cdut_total
-    #
-    # def get_cdut_total(self):
-    #     return self.cdut_total
+
+class Discuss(db.Model):
+    __tablename__ = 'discuss'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(40))
+    said = db.Column(db.String(140))
+    saidtime = db.Column(db.DateTime, default=datetime.now())
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'said': self.said,
+            'saidtime': self.saidtime,
+        }
 
 
 @login.user_loader

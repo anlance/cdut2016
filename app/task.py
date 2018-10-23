@@ -52,3 +52,7 @@ def init():
     # 初始化db存储的配置信息
     init_config()
     init_news()
+
+
+# init_config()
+# init_cdut()

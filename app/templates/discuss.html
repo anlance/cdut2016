@@ -1,1 +1,220 @@
-<h1>这里是讨论区</h1>
+<center><h4>留言区</h4></center>
+<hr>
+<div id="showDiscuss" class="pre-scrollable" style="min-height: 67%;overflow-y:auto;">
+    {% for us in user_said %}
+        {% if us.username == "Anonymous" %}
+            <div style="background-color: hsla(255,44%,76%,.5);" class="user_said">
+                <span style="font-weight: bolder">{{ us.username }} :</span>
+                <span >{{ us.said }}</span>
+            </div>
+        {% else %}
+            <div class="user_said">
+                <span style="font-weight: bolder">{{ us.username }} :</span>
+                <span >{{ us.said }}</span>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div id="discuss_form">
+{#    {{ wtf.quick_form(discuss_form,form_type='inline') }}#}
+    {{ discuss_form.username }}
+    {{ discuss_form.said }}
+    <button type="button" id="send" name="send" class="btn btn-success" onclick="add_discuss()">
+        <span style="float: right; padding-right: 5px;">发<br>送</span>
+        <span id="airplane" style="top: 3px; position: absolute;" class="glyphicon glyphicon-send"></span>
+    </button>
+    <button type="button" id="isAnonymous" class="btn btn-info">
+        <span id="isAnonymous_span2" style="top: 3px; position: absolute;" class="glyphicon glyphicon-eye-open"></span>
+        <span id="isAnonymous_span1" style="float: left; padding-left: 4px;">匿<br>名</span>
+    </button>
+    <span id="number">0/50</span>
+</div>
+
+
+
+<style>
+    .user_said{
+        position: relative;
+        padding: 5px 10px 5px 10px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px; /* Safari 4 and earlier */
+        border-radius: 20px; /* Opera, Chrome, Safari 5, IE 9 */
+        border-top: 1px solid #fff;
+        background-color: hsla(182,44%,76%,.5);
+        background-image: -moz-linear-gradient(hsla(0,0%,100%,.6), hsla(0,0%,100%,0) 30px);
+        background-image: -webkit-gradient(linear, 0 0, 0 30, from(hsla(0,0%,100%,.6)), to(hsla(0,0%,100%,0)));
+        -moz-box-shadow: 1px 1px 2px hsla(0,0%,0%,.3);
+        -webkit-box-shadow: 1px 1px 2px hsla(0,0%,0%,.3);
+        box-shadow: 1px 1px 2px hsla(0,0%,0%,.3); /* Opera, IE 9 */
+        word-wrap: break-word;
+        height: auto;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+
+    #showDiscuss{
+        {#border: 1px solid #ccc!important;#}
+        {#border-radius: 16px!important;#}
+        padding-left: 10px;
+        margin-right: 0px;
+    }
+
+    #discuss_form{
+        height: 84px;
+        position: absolute;
+        bottom: 5px;
+        left: 30px;
+    }
+
+    #said{
+        height: 90px;
+        width: 290px;
+        outline: none;
+        background-color: powderblue;
+        border: 1px solid darkcyan;
+        resize: none;
+        overflow: auto;
+        text-indent:2em;
+    }
+
+    #username{
+        display:none;
+    }
+
+    #number{
+        position: absolute;
+        bottom: 12px;
+        left: 255px;
+    }
+
+    #isAnonymous{
+        position: absolute;
+        outline: none;
+        border-radius: 16px!important;
+        left: -23px;
+        bottom: -6px;
+        height: 111px;
+        width: 160px;
+        {#根据点切割图形#}
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 20%, 15% 20%, 15% 100%, 0 100%);
+        padding: 0px;
+        font-weight: bold;
+    }
+
+    #send{
+        position: absolute;
+        outline: none;
+        border-radius: 16px!important;
+        border-width: 0px;
+        bottom: -6px;
+        left: 154px;
+        height: 111px;
+        width: 160px;
+        -webkit-clip-path: polygon(0 0, 0 20%, 85% 20%, 85% 100%, 100% 100%, 100% 0);
+        padding: 0px;
+    }
+
+    #send:hover #airplane{
+        color: coral!important;
+        animation:airplane1 3s !important;
+        animation-fill-mode: forwards !important;
+    }
+
+    #send:active #airplane {
+        color: coral!important;
+        animation:airplane2 3s !important;
+        animation-fill-mode: none !important;
+    }
+
+
+    @keyframes airplane1 {
+        0%   {left: 70px;}
+        100%  {left: 5px;}
+    }
+
+    @keyframes airplane2 {
+        0%   {left: 5px;top:0px;}
+        100%  {left: 5px;top: -50px;}
+    }
+}
+</style>
+<script>
+
+
+    let said = document.getElementById("said");
+    said.oninput = function inputSaid(){
+        let len = said.value.length;
+        let number = document.getElementById("number");
+        number.innerText = len + "/50";
+    }
+    let themeChanged = true;
+    let isAnonymous = document.getElementById("isAnonymous");
+    let username = document.getElementById("username");
+
+    //初始化discuss界面
+    window.onload = function(){
+         username.value = "{{ current_user.username }}";
+         //定位到最新
+         $("#showDiscuss").scrollTop($("#showDiscuss")[0].scrollHeight);
+    }
+
+    //匿名与非匿名的切换
+    isAnonymous.onclick = function () {
+        themeChanged = !themeChanged;
+        if(themeChanged==true){
+            $("#isAnonymous_span1").html("匿<br>名<br>");
+            $("#isAnonymous_span2").attr("class", "glyphicon glyphicon-eye-open")
+            $("#isAnonymous").css("color", "white");
+            isAnonymous.setAttribute("class","btn btn-info");
+            username.value = "{{ current_user.username }}";
+        }
+        else {
+            $("#isAnonymous_span1").html("取<br>消<br>匿<br>名<br>");
+            $("#isAnonymous_span2").attr("class", "glyphicon glyphicon-eye-close")
+            $("#isAnonymous").css("color", "black");
+            isAnonymous.setAttribute("class","btn btn-primary");
+            username.value = "Anonymous";
+        }
+    }
+
+    //发送discuss
+    function add_discuss() {
+        let username = $("#username").val();
+        let said = $("#said").val();
+        let data = {
+            data: JSON.stringify({
+                'username': username,
+                'said': said
+            }),
+        }
+         $.ajax({
+            url:"{{ url_for('main.add_discuss') }}",
+            type:"post",
+            data: data,
+            dataType: 'json',
+            success:function(data){
+                let user_said = data.user_said
+                console.log(user_said);
+                let add_text = "";
+                for(i in user_said){
+                    console.log(user_said[i].username)
+                    if(user_said[i].username == "Anonymous"){
+                        add_text += '<div style="background-color: hsla(255,44%,76%,.5);" class="user_said">' + '<span style="font-weight: bolder">' + user_said[i].username +':</span><span >'+ user_said[i].said+'</span></div>'
+                    }
+                    else{
+                        add_text += '<div class="user_said">' + '<span style="font-weight: bolder">' + user_said[i].username +':</span><span >'+ user_said[i].said+'</span></div>'
+                    }
+                    {#add_text += '<li style="padding-bottom: 5px">'+user_said[i].username +':'+ user_said[i].said+'</li>'#}
+                }
+                $("#showDiscuss").html(add_text);
+                $("#showDiscuss").animate({scrollTop: $("#showDiscuss")[0].scrollHeight}, 1000);
+            },
+            error:function(){
+                 alert("error");
+            }
+        })
+    }
+
+</script>

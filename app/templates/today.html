@@ -1,1 +1,40 @@
-<h1>这里是每日一句</h1>
+
+
+<span id="today_en">{{ today['content']}}</span>
+<span id="today_mp3" class="glyphicon glyphicon-volume-up" onclick="audio_play()"></span><br>
+<span id="today_zh">{{ today['note']}}</span>
+<hr>
+<center><h4>{{ today['dateline']}}</h4></center>
+
+<style>
+
+
+    #today_en{
+        font-size: 22px;
+        font-family: 'Tangerine', serif, 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+        font-weight: bold;
+    }
+
+    #today_zh{
+        font-size: 14px;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        font-weight: lighter;
+    }
+
+    #today_mp3{
+        color: #cccccc;
+        font-size: 21px;
+    }
+    #today_mp3:hover{
+        color: #7cbef0;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function audio_play () {
+        let audio_url = "{{ today['tts'] }}";
+        let audio = new Audio(audio_url);
+        audio.play();
+    }
+
+</script>
