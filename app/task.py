@@ -1,8 +1,10 @@
 import re
 from datetime import datetime
 from app import db, create_app
+from app.models import User
 from app.news_cdut.models import NewsCdut
 from app.spider.cdut import init_news, update_news
+from app.spider.score import login_cdut, parse_stu_score
 
 app = create_app()
 
@@ -43,3 +45,18 @@ def init():
     db.create_all(app=app)
     print('--init_db--')
     init_cdut()
+
+
+def init_score():
+    app.app_context().push()
+    users = User.query.filter().all()
+    score_list = []
+    for user in users:
+        if user.school_number and user.identity:
+            print(user.identity)
+            print(user.school_number)
+            response_obj, status = login_cdut(user.school_number, user.identity)
+            score_list = parse_stu_score(response_obj, status)
+            print(score_list)
+
+# init_score()

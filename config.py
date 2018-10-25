@@ -33,5 +33,6 @@ class Config(object):
     #
     #     }
     # ]
+    SUPER_ADMIN_NUM = 1
 
 

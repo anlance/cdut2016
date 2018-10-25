@@ -6,11 +6,10 @@ from app.models import User
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-    identity = StringField('身份证号',validators=[DataRequired()])
-    deadtime_info = StringField('事件')
-    deadtime_day = DateField('时间', format='%Y-%m-%d')
+    username = StringField('姓名', validators=[DataRequired()])
+    about_me = TextAreaField('签名', validators=[Length(min=0, max=140)])
+    identity = StringField('身份证号')
+    school_number = StringField('学号')
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):
@@ -22,3 +21,13 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+
+class DeadtimeForm(FlaskForm):
+    deadtime_info = StringField('事件', validators=[DataRequired()])
+    deadtime_day = DateField('时间', format='%Y-%m-%d', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def __init__(self, original_username, *args, **kwargs):
+        super(DeadtimeForm, self).__init__(*args, **kwargs)
+        self.original_username = original_username

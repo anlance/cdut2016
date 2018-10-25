@@ -1,0 +1,40 @@
+{% extends "manage/manage_base.html" %}
+
+{% block manage_content %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User-ID</th>
+                        <th>姓名</th>
+                        <th>邮箱</th>
+                        <th>身份证</th>
+                        <th>学号</th>
+                        <th>角色</th>
+                        <th>控制</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for u in user %}
+                            <th>{{ u.id }}</th>
+                            <th>{{ u.username }}</th>
+                            <th>{{ u.email }}</th>
+                            <th>{{ u.identity }}</th>
+                            <th>{{ u.school_number }}</th>
+                            {% if u.role == 0 %}
+                                <th>普通用户</th>
+                                <th><a href="{{ url_for('manage.be_manage', id=u.id) }}">成为管理员</a></th>
+                            {% else %}
+                                <th style="color: green">管理员</th>
+                                <th><a href="{{ url_for('manage.del_manage', id=u.id) }}">取消管理员</a></th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

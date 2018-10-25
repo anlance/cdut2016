@@ -1,10 +1,11 @@
 from _md5 import md5
 from datetime import datetime
+from functools import wraps
 from time import time
 
 import jwt
-from flask import current_app
-from flask_login import UserMixin
+from flask import current_app, abort
+from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login, db
@@ -20,8 +21,11 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.now)
     identity = db.Column(db.String(100))
+    school_number = db.Column(db.String(50))
     deadtime_info = db.Column(db.String(140))
     deadtime_day = db.Column(db.DateTime)
+    role = db.Column(db.Integer)
+    score = db.relationship("Score", backref="user")
 
     def __init__(self, username, password, email):
         self.username = username
@@ -45,6 +49,12 @@ class User(UserMixin, db.Model):
         return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in}, current_app.config['SECRET_KEY'],
                           algorithm='HS256').decode('utf-8')
 
+    def set_role(self, role):
+        self.role = role
+
+    def is_administrator(self):
+        return self.role
+
     @staticmethod
     def verify_reset_password_token(token):
         try:
@@ -52,6 +62,20 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
+
+
+class Score(db.Model):
+    __tablename__ = 'score'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    term = db.Column(db.String(20))
+    name = db.Column(db.String(100))
+    teacher = db.Column(db.String(50))
+    credit = db.Column(db.String(10))
+    grade = db.Column(db.String(10))
+    type = db.Column(db.String(20))
+    gpa = db.Column(db.String(10))
+    up_time = db.Column(db.DateTime)
 
 
 # 留言
@@ -74,3 +98,12 @@ class Discuss(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+def admin_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_administrator():
+            abort(403)
+        return func(*args, **kwargs)
+    return decorated_function

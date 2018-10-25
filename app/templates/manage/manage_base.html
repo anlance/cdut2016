@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+              <li id="man1" role="presentation" class="active"><a href="{{ url_for('main.user', username=current_user.username) }}">发布公告</a></li>
+              <li id="man2" role="presentation"><a href="#">信息管理</a></li>
+              <li id="man3" role="presentation"><a href="{{ url_for('manage.add_manage') }}">管理员控制</a></li>
+            </ul>
+        </div>
+
+        {% block manage_content %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

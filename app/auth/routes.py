@@ -43,6 +43,7 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         user = User(username=form.username.data, password=form.password.data, email=form.email.data)
+        user.set_role(0)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, 注册成功!', 'success')

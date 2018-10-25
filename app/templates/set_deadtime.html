@@ -1,0 +1,39 @@
+{% extends "user_base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script type="text/javascript">
+    $('#deadtime_day').datepicker({
+        weekStart: 7,
+        autoclose: true,
+        todayHighlight: 1,
+        todayBtn : true,  //在底部是否显示今天
+        format: "yyyy-mm-dd",
+        defaultDate: "2019-1-1",
+        language: "zh-CN"
+
+    });
+
+    $('#li1').removeClass("active")
+    $('#li3').addClass("active")
+    </script>
+{% endblock %}
+
+{% block user_content %}
+    <center><h1><span class="glyphicon glyphicon-time" style="font-size: 30px"></span> 设置倒计时</h1></center>
+    <br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+{% endblock %}
