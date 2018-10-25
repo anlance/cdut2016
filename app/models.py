@@ -52,7 +52,7 @@ class User(UserMixin, db.Model):
     def set_role(self, role):
         self.role = role
 
-    def is_administrator(self):
+    def get_role(self):
         return self.role
 
     @staticmethod
@@ -100,10 +100,22 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+# 管理员权限
 def admin_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        if not current_user.is_administrator():
+        if not current_user.get_role():
+            abort(403)
+        return func(*args, **kwargs)
+
+    return decorated_function
+
+
+# 超级管理员权限
+def super_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if int(current_user.get_role()) < 2:
             abort(403)
         return func(*args, **kwargs)
     return decorated_function

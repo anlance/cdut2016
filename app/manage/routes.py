@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from app import db
 from app.manage import bp
-from app.models import User, admin_required
+from app.models import User, admin_required, super_required
 
 
 @bp.route('/manage')
@@ -15,7 +15,7 @@ def manage():
 
 @bp.route('/add_manage')
 @login_required
-@admin_required
+@super_required
 def add_manage():
     user = User.query.filter(User.id > 1).all()
     return render_template('manage/add_manage.html', user=user)
@@ -23,7 +23,7 @@ def add_manage():
 
 @bp.route('/be_manage/<id>')
 @login_required
-@admin_required
+@super_required
 def be_manage(id):
     user = User.query.filter(User.id > 1).all()
     be_user = User.query.filter_by(id=id).first_or_404()
@@ -35,7 +35,7 @@ def be_manage(id):
 
 @bp.route('/del_manage/<id>')
 @login_required
-@admin_required
+@super_required
 def del_manage(id):
     user = User.query.filter(User.id > 1).all()
     del_manage = User.query.filter_by(id=id).first_or_404()
