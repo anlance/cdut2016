@@ -1,4 +1,4 @@
-{% extends "user_base.html" %}
+{% extends "personal/user_base.html" %}
 
 {% block user_content %}
         <div class="col-md-10">
@@ -12,7 +12,7 @@
                         {% if user.school_number %}<h3>{{ _('学号') }}:{{ user.school_number }}</h3>{% endif %}
                         {% if user.last_seen %}<p style="font-size: 16px; color: lightsalmon">{{ _('上次登录') }}: {{ user.last_seen }}</p>{% endif %}
                     {% if user == current_user %}
-                        <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
+                        <p><a href="{{ url_for('personal.edit_profile') }}">Edit your profile</a></p>
                     {% endif %}
                     </td>
                 </tr>

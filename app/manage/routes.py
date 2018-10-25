@@ -13,12 +13,12 @@ def manage():
     return render_template('manage/announce.html')
 
 
-@bp.route('/add_manage')
+@bp.route('/allUser')
 @login_required
 @super_required
-def add_manage():
+def allUser():
     user = User.query.filter(User.id > 1).all()
-    return render_template('manage/add_manage.html', user=user)
+    return render_template('manage/allUser.html', user=user)
 
 
 @bp.route('/be_manage/<id>')
@@ -30,7 +30,7 @@ def be_manage(id):
     be_user.set_role(1)
     db.session.commit()
     flash(be_user.username+'已经成为管理员', 'success')
-    return render_template('manage/add_manage.html', user=user)
+    return render_template('manage/allUser.html', user=user)
 
 
 @bp.route('/del_manage/<id>')
@@ -42,4 +42,4 @@ def del_manage(id):
     del_manage.set_role(0)
     db.session.commit()
     flash(del_manage.username+'已经不是管理员', 'success')
-    return render_template('manage/add_manage.html', user=user)
+    return render_template('manage/allUser.html', user=user)

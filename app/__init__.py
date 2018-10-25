@@ -45,14 +45,17 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
+    from app.personal import bp as personal_bp
+    app.register_blueprint(personal_bp, url_prefix='/personal')
+
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
     from app.news_cdut import bp as news_cdut_bp
-    app.register_blueprint(news_cdut_bp)
+    app.register_blueprint(news_cdut_bp, url_prefix='/news_cdut')
 
     from app.manage import bp as manage_bp
-    app.register_blueprint(manage_bp)
+    app.register_blueprint(manage_bp, url_prefix='/manage')
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:

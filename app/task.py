@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 from app import db, create_app
-from app.models import User
+from app.models import User, Score
 from app.news_cdut.models import NewsCdut
 from app.spider.cdut import init_news, update_news
 from app.spider.score import login_cdut, parse_stu_score
@@ -25,7 +25,6 @@ def save_to_db(news):
 def init_cdut():
     news, cur_total = init_news()
     save_to_db(news)
-    print('--init_cdut--')
 
 
 def update_cdut():
@@ -41,10 +40,13 @@ def update_cdut():
 
 
 def init():
+    print('--init_db--')
     db.drop_all(app=app)
     db.create_all(app=app)
-    print('--init_db--')
+    print('--init_cdut--')
     init_cdut()
+    print('--init_score--')
+    init_score()
 
 
 def init_score():
@@ -57,6 +59,9 @@ def init_score():
             print(user.school_number)
             response_obj, status = login_cdut(user.school_number, user.identity)
             score_list = parse_stu_score(response_obj, status)
-            print(score_list)
+            for score in score_list:
+                score = Score(user_id=user.id, term=score[0], name=score[1], teacher=score[2], credit=score[3], grade=score[4], type=score[5], gpa=score[6], up_time=score[7])
+                db.session.add(score)
+                db.session.commit()
 
 # init_score()

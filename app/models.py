@@ -70,11 +70,11 @@ class Score(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     term = db.Column(db.String(20))
     name = db.Column(db.String(100))
-    teacher = db.Column(db.String(50))
-    credit = db.Column(db.String(10))
-    grade = db.Column(db.String(10))
+    teacher = db.Column(db.String(20))
+    credit = db.Column(db.String(5))
+    grade = db.Column(db.String(5))
     type = db.Column(db.String(20))
-    gpa = db.Column(db.String(10))
+    gpa = db.Column(db.String(5))
     up_time = db.Column(db.DateTime)
 
 
