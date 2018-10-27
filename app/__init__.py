@@ -52,7 +52,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
 
     from app.news_cdut import bp as news_cdut_bp
-    app.register_blueprint(news_cdut_bp, url_prefix='/news_cdut')
+    app.register_blueprint(news_cdut_bp)
 
     from app.manage import bp as manage_bp
     app.register_blueprint(manage_bp, url_prefix='/manage')

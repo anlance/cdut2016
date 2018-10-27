@@ -6,9 +6,9 @@
     {% endif %}
     <div class="row">
         <div class="col-md-2">
-            <ul class="nav nav-pills nav-stacked">
-              <li id="li1" role="presentation" class="active"><a href="{{ url_for('personal.user', username=current_user.username) }}">基本信息</a></li>
-              <li id="li2" role="presentation"><a href="#">成绩信息</a></li>
+            <ul class="nav nav-pills nav-stacked" >
+              <li id="li1" role="presentation"><a href="{{ url_for('personal.user', username=current_user.username) }}">基本信息</a></li>
+              <li id="li2" role="presentation"><a href="{{ url_for('personal.score') }}">成绩信息</a></li>
               <li id="li3" role="presentation"><a href="{{ url_for('personal.set_deadtime') }}">设置倒计时</a></li>
             </ul>
         </div>
@@ -25,3 +25,4 @@
                 }
             </style>
 {% endblock %}
+

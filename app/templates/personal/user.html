@@ -21,3 +21,11 @@
     </div>
 
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+    $("ul").children().removeClass("active")
+    $('#li1').addClass("active")
+    </script>
+{% endblock %}

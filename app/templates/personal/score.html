@@ -1,0 +1,48 @@
+{% extends "personal/user_base.html" %}
+
+{% block user_content %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9" style="height: 550px;overflow: auto;">
+                <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>学期</th>
+                            <th>课程名</th>
+                            <th>老师</th>
+                            <th>学分</th>
+                            <th>成绩</th>
+                            <th>类型</th>
+                            <th>绩点</th>
+                            <th>上传时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in all_score %}
+                            <tr >
+                                <th>{{ score.id }}</th>
+                                <th class="1">{{ score.term }}</th>
+                                <th>{{ score.name }}</th>
+                                <th>{{ score.teacher }}</th>
+                                <th>{{ score.credit }}</th>
+                                <th class="2">{{ score.grade }}</th>
+                                <th class="3">{{ score.type }}</th>
+                                <th>{{ score.gpa }}</th>
+                                <th>{{ score.up_time }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+    $("ul").children().removeClass("active")
+    $('#li2').addClass("active")
+    </script>
+
+{% endblock %}

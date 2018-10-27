@@ -1,0 +1,40 @@
+{% extends "manage/manage_base.html" %}
+
+
+{% block manage_content %}
+    <center><h1><span class="glyphicon glyphicon-fire" style="font-size: 30px"></span>  发布成功</h1></center>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+            <table class="table table-bordered" style="font-size: 18px">
+              <center><caption>提交的信息</caption></center>
+              <thead>
+                <tr>
+                    {% for item in announce_model %}
+                        {% if not item[0] == None %}
+                            <th>{{ item[0] }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {% for item in announce %}
+                      {% if not item == None %}
+                        <td>{{ item }}</td>
+                      {% endif %}
+                  {% endfor %}
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+    </script>
+{% endblock %}

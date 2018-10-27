@@ -1,7 +1,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}{{ title }} - Anlance-cdut{% else %}{{ _('Welcome to anlance') }}{% endif %}
+    {% if title %}{{ title }}{% else %}{{ _('Welcome to anlance') }}{% endif %}
 {% endblock %}
 
 {% block scripts %}
