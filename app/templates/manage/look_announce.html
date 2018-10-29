@@ -1,0 +1,43 @@
+{% extends "manage/manage_base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block manage_content %}
+    <center><h1><span class="glyphicon glyphicon-briefcase" style="font-size: 30px"></span>  已经发布的公告</h1></center>
+    <hr><br><br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+            {% for announce_model in announce_models %}
+                <li style="padding-bottom: 5px"><a href="{{ url_for("manage.detail", announce_model_id =announce_model.id) }}">{{ announce_model.name }} </span> <span style="float: right">{{ announce_model.up_time }} <span class="badge">{{ announce_model.up_num }}</span></span></a></li>
+            {% endfor %}
+
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> {{ _('Newer 公告') }}
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            {{ _('Older 公告') }} <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+    $("ul").children().removeClass("active");
+    $('#man3').addClass("active");
+    $('#info').css("height", "80px");
+    $('#item_num').css("width", "60px");
+    </script>
+
+{% endblock %}

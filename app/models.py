@@ -83,12 +83,12 @@ class Score(db.Model):
 # 模板公告
 class AnnounceModel(db.Model):
     __tablename__ = 'announceModel'
-    _i = 0
     id = db.Column(db.Integer, primary_key=True)
     manage_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(100))
     info = db.Column(db.String(500))
     item_num = db.Column(db.Integer)
+    up_num = db.Column(db.Integer, default=0)
     up_time = db.Column(db.DateTime)
     item1 = db.Column(db.String(50))
     place1 = db.Column(db.String(50))
@@ -250,9 +250,9 @@ class AnnounceModel(db.Model):
 class Announce(db.Model):
     __tablename__ = 'announce'
     id = db.Column(db.Integer, primary_key=True)
-    announce_id = db.Column(db.Integer)
-    user_id = db.Column(db.Integer)
+    model_id = db.Column(db.Integer)
     manage_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer)
     item_num = db.Column(db.Integer)
     up_time = db.Column(db.DateTime)
     item1 = db.Column(db.String(140))

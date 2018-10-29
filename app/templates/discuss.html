@@ -196,10 +196,8 @@
             dataType: 'json',
             success:function(data){
                 let user_said = data.user_said
-                console.log(user_said);
                 let add_text = "";
                 for(i in user_said){
-                    console.log(user_said[i].username)
                     if(user_said[i].username == "Anonymous"){
                         add_text += '<div style="background-color: hsla(255,44%,76%,.5);" class="user_said">' + '<span style="font-weight: bolder">' + user_said[i].username +':</span><span >'+ user_said[i].said+'</span></div>'
                     }
@@ -209,6 +207,7 @@
                 }
                 $("#showDiscuss").html(add_text);
                 $("#showDiscuss").animate({scrollTop: $("#showDiscuss")[0].scrollHeight}, 1000);
+                $("#said").val("");
             },
             error:function(){
                  alert("error");

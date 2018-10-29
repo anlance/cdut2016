@@ -3,13 +3,25 @@
 
 
 {% block app_content %}
-    <center><h1><span class="glyphicon glyphicon-pencil" style="font-size: 30px"></span>  编写表单内容</h1></center>
-    <br>
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <center><h2><span class="glyphicon glyphicon-ice-lolly-tasted" style="font-size: 26px"></span>  {{ announce_model.name }}</h2></center>
+            <hr><br><br>
+            <div class="well" style="text-align: center">
+                <h4>{{ announce_model.info }}</h4>
+            </div>
+            <br><br>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
         <div class="col-md-10">
+            <span style="color: darkseagreen">需要填写的表单</span>
             <form action="" method="post">
-            {{ form.hidden_tag() }}
+                {{ form.hidden_tag() }}
                 <table class="table table-bordered">
                     <thead>
                         <tr>

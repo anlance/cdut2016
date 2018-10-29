@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FieldList, FormField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FieldList, FormField, IntegerField
+from wtforms.validators import DataRequired, NumberRange
 
 
 class ToWriteForm(FlaskForm):
-    name = StringField('公告题目', validators=[DataRequired()])
+    name = StringField('公告标题', validators=[DataRequired()])
     info = TextAreaField('公告内容', validators=[DataRequired()])
-    item_num = StringField('表格数目', validators=[DataRequired()])
+    item_num = IntegerField('表格数目', validators=[DataRequired(), NumberRange(0, 20)])
     submit = SubmitField('准备发布')
 
 

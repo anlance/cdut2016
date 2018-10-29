@@ -1,12 +1,18 @@
-{% extends "manage/manage_base.html" %}
+{% extends "base.html" %}
 
 
-{% block manage_content %}
-    <center><h1><span class="glyphicon glyphicon-fire" style="font-size: 30px"></span>  发布成功</h1></center>
-    <br><br><br>
+{% block app_content %}
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-8">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <center><h1><span class="glyphicon glyphicon-equalizer" style="font-size: 30px"></span>  提交成功</h1></center>
+            <hr><br><br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
             <table class="table table-bordered" style="font-size: 18px">
               <center><caption>提交的信息</caption></center>
               <thead>
@@ -27,7 +33,13 @@
                   {% endfor %}
                 </tr>
               </tbody>
+            <br>
             </table>
+            <div class="btn" style="background-color: lightgreen; margin-top: 10px">
+                <span class="glyphicon glyphicon-arrow-left" style="font-size: 16px"></span>
+                <a href="{{ url_for('personal.aleter', announce_id=announce.id) }}" style="font-size: 16px">修改表单内容</a>
+            </div><br><br>
+            <span style="margin-top: 10px"><i style="color: red;">tips</i>: 已经禁用浏览器的后退功能</span>
         </div>
     </div>
 {% endblock %}
@@ -36,5 +48,10 @@
 {% block scripts %}
     {{ super() }}
     <script type="text/javascript">
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
     </script>
 {% endblock %}

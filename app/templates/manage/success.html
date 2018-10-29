@@ -2,16 +2,16 @@
 
 
 {% block manage_content %}
-    <center><h1><span class="glyphicon glyphicon-fire" style="font-size: 30px"></span>  发布成功</h1></center>
-    <br><br><br>
+    <center><h1><span class="glyphicon glyphicon-fire" style="font-size: 30px"></span>  公告详情</h1></center>
+    <hr><br><br>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-8">
             <table class="table table-bordered" style="font-size: 18px">
-              <center><caption>公告</caption></center>
+              <caption>公告</caption>
               <thead>
                 <tr>
-                  <th>题目</th>
+                  <th>标题</th>
                   <th>内容</th>
                 </tr>
               </thead>
@@ -22,7 +22,37 @@
                 </tr>
               </tbody>
             </table>
-            <a href="{{ url_for('personal.submit', announce_id=announce_model.id) }}" style="font-size: 16px">点击查看</a>
+            {% if not announce_model.get_item_num() == 0 %}
+                <table class="table table-bordered">
+                <thead>
+                <tr>
+                    {% for item in announce_model %}
+                        {% if not item[0] == None %}
+                            <th>{{ item[0] }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for item in announce_model %}
+                        {% if not item[1] == None %}
+                            <td>{{ item[1] }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                </tbody>
+                </table>
+            {% endif %}
+                <div class="btn" style="background-color: darksalmon; margin-top: 10px; float: right">
+                    <a href="{{ url_for('personal.submit', announce_model_id=announce_model.id) }}" style="font-size: 16px">查看公告</a>
+                    <span class="glyphicon glyphicon-share" style="font-size: 16px"></span>
+                </div>
+                <br>
+                <div class="btn" style="background-color: lightgreen; margin-top: 0px">
+                    <span class="glyphicon glyphicon-arrow-left" style="font-size: 16px"></span>
+                    <a href="{{ url_for('manage.add_announce', id=announce_model.id) }}" style="font-size: 16px">返回上一步</a>
+                </div>
         </div>
     </div>
 {% endblock %}

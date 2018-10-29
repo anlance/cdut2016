@@ -1,0 +1,54 @@
+{% extends "manage/manage_base.html" %}
+
+
+{% block manage_content %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-lg-9">
+            <center><h1><span class="glyphicon glyphicon-print" style="font-size: 30px"></span>  {{ announce_model.name }}<small><a href="{{ url_for("manage.download", announce_model_id=announce_model.id)}}"> 点击下载</a> </small></h1></center>
+            <hr><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-9">
+            <div class="well" style="text-align: center;height: 100px;overflow: auto;">
+                <h4>{{ announce_model.info }}</h4>
+            </div>
+            <div style="height: 300px;overflow: auto;">
+                {% if not announce_model.get_item_num() == 0 %}
+                    <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        {% for item in announce_model %}
+                            {% if not item[0] == None %}
+                                <th>{{ item[0] }}</th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for announce in announces %}
+                            <tr>
+                            {% for item in announce %}
+                                {% if not item == None %}
+                                    <td>{{ item }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+    </script>
+{% endblock %}

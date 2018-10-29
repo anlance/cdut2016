@@ -1,1 +1,16 @@
-<h1>这里是公告</h1>
+<center><h4>公告</h4></center>
+<a href="{{ url_for('news_cdut.more') }}" class="more"><i class="glyphicon glyphicon-share-alt"></i> more +</a>
+<hr>
+
+
+{% for notice in notices %}
+    <li style="padding-bottom: 5px;font-size: 16px;"><a href="{{ url_for('personal.submit', announce_model_id=notice.id) }}">{{ notice.name }}</a></li>
+{% endfor %}
+
+
+<style>
+    .more{
+        float: right;
+        color: lightgreen;
+    }
+</style>

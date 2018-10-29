@@ -5,7 +5,10 @@
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
               <li id="man1" role="presentation"><a href="{{ url_for('manage.manage', username=current_user.username) }}">发布公告</a></li>
-              <li id="man2" role="presentation"><a href="{{ url_for('manage.allUser') }}">管理员控制</a></li>
+              <li id="man3" role="presentation"><a href="{{ url_for('manage.look_announce', manage_id=current_user.id) }}">查看公告</a></li>
+                {% if current_user.role > 1 %}
+                    <li id="man2" role="presentation"><a href="{{ url_for('manage.allUser') }}">用户管理</a></li>
+                {% endif %}
             </ul>
         </div>
 
@@ -16,7 +19,7 @@
     <style>
         #submit {
             background-color: #7cbef0 !important;
-            margin-top: 20px;
+            margin-top: 10px;
             float: right;
         }
     </style>

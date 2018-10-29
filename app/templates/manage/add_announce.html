@@ -3,17 +3,35 @@
 
 
 {% block manage_content %}
-    <center><h1><span class="glyphicon glyphicon-pencil" style="font-size: 30px"></span>  编写表单内容</h1></center>
-    <br>
+    <center><h1><span class="glyphicon glyphicon-leaf" style="font-size: 30px"></span>  编写表单内容</h1></center>
+    <hr><br>
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-10">
+        <div class="col-md-9">
+            <div style="height: 140px;overflow: auto;">
+                <table class="table table-bordered" style="font-size: 18px; margin-top: 10px;">
+                  <center><caption>公告：</caption></center>
+                  <thead>
+                    <tr>
+                      <th>标题</th>
+                      <th>内容</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ announce_model.name }}</td>
+                      <td>{{ announce_model.info }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        <br>
             <form action="" method="post">
             {{ form.hidden_tag() }}
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>属性</th>
+                            <td></td>
                             {% for item in form.items %}
                                 <th>{{ item.label }}</th>
                             {% endfor %}
@@ -21,21 +39,27 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th>元素</th>
+                            <td>元素</td>
                             {% for item in form.items %}
                                 <td>{{ item.itname }}</td>
                             {% endfor %}
                         </tr>
                         <tr>
-                            <th>示例</th>
+                            <td>示例</td>
                             {% for item in form.items %}
                                 <td>{{ item.placeholder }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
                 </table>
-            {{ form.submit }}
+                {{ form.submit }}
             </form>
+
+            <div class="btn" style="background-color: lightgreen; margin-top: 10px">
+                <span class="glyphicon glyphicon-arrow-left" style="font-size: 16px"></span>
+                <a href="{{ url_for('manage.alter_model', announceModel_id=announce_model.id) }}" style="font-size: 16px">返回上一步</a>
+            </div><br>
+            <span style="margin-top: 10px"><i style="color: red;">tips</i>: 已经禁用浏览器的后退功能</span>
         </div>
     </div>
 {% endblock %}
@@ -44,7 +68,14 @@
 {% block scripts %}
     {{ super() }}
     <script type="text/javascript">
-    $("input").addClass("form-control")
+    $("input").addClass("form-control");
+    $("#submit").removeClass("form-control");
+    $("#submit").addClass("btn");
+        //防止页面后退
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
     </script>
 
 {% endblock %}

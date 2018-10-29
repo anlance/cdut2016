@@ -60,7 +60,7 @@ def set_deadtime():
 
 
 # 成为超级管理员
-@bp.route('/be_super/<id>',  methods=['GET', 'POST'])
+@bp.route('/be_super/<id>', methods=['GET', 'POST'])
 @login_required
 def be_super(id):
     user = User.query.filter_by(id=id).first_or_404()
@@ -80,28 +80,68 @@ def score():
 
 # 可以不用登录就填写
 # 填写表单
-@bp.route('/submit/<announce_id>', methods=['GET', 'POST'])
-def submit(announce_id):
-    announce_model = AnnounceModel.query.filter(AnnounceModel.id == announce_id).first()
+@bp.route('/submit/<announce_model_id>', methods=['GET', 'POST'])
+def submit(announce_model_id):
+    announce_model = AnnounceModel.query.filter(AnnounceModel.id == announce_model_id).first()
     form = SubmitForm()
     if form.is_submitted():
         i = 0
         manage_id = announce_model.manage_id
         item_num = announce_model.get_item_num()
-        cur_announce = Announce(manage_id=manage_id, item_num=item_num, up_time=datetime.now())
+        if current_user.is_anonymous:
+            cur_announce = Announce(model_id=announce_model_id, manage_id=manage_id, item_num=item_num, up_time=datetime.now())
+        else:
+            cur_announce = Announce(model_id=announce_model_id, user_id=current_user.id, manage_id=manage_id, item_num=item_num,
+                                    up_time=datetime.now())
         while i < announce_model.get_item_num():
             cur_announce[i] = form.items[i].item.data
             i += 1
+        announce_model.up_num += 1
         db.session.add(cur_announce)
         db.session.commit()
-        return render_template('announces/success.html', title='提交成功', announce=cur_announce, announce_model=announce_model)
+        return redirect(url_for('personal.success', title='提交成功', announce_id=cur_announce.id))
     else:
         for item in range(announce_model.item_num):
             form.items.append_entry(item)
         # 设置每个输入框的placeholder属性
         i = 0
         while i < announce_model.get_item_num():
-            print(form.items[i].item)
             form.items[i].item.render_kw = {"placeholder": announce_model[i][1]}
+            i += 1
+        return render_template('announces/announce_base.html', title='管理中心', form=form, announce_model=announce_model)
+
+
+@bp.route('/success/<announce_id>', methods=['GET', 'POST'])
+def success(announce_id):
+    announce = Announce.query.filter(Announce.id == announce_id).first()
+    announce_model = AnnounceModel.query.filter(AnnounceModel.id == announce.model_id).first()
+    return render_template('announces/success.html', title='提交成功', announce=announce,
+                           announce_model=announce_model)
+
+
+# 可以不用登录就填写
+# 修改表单
+@bp.route('/aleter/<announce_id>', methods=['GET', 'POST'])
+def aleter(announce_id):
+    print(announce_id)
+    cur_announce = Announce.query.filter(Announce.id == announce_id).first()
+    announce_model = AnnounceModel.query.filter(AnnounceModel.id == cur_announce.model_id).first()
+    form = SubmitForm()
+    if form.is_submitted():
+        i = 0
+        cur_announce.up_time = datetime.now()
+        while i < announce_model.get_item_num():
+            cur_announce[i] = form.items[i].item.data
+            i += 1
+        db.session.commit()
+        return redirect(url_for('personal.success', title='提交成功', announce_id=cur_announce.id,
+                                announce_model_id=announce_model.id))
+    else:
+        for item in range(announce_model.item_num):
+            form.items.append_entry(item)
+        # 设置每个输入框为上次输入的内容
+        i = 0
+        while i < announce_model.get_item_num():
+            form.items[i].item.data = cur_announce[i]
             i += 1
         return render_template('announces/announce_base.html', title='管理中心', form=form, announce_model=announce_model)
