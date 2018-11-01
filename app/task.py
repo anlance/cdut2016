@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, time
 from app import db, create_app
 from app.auth.email import send_score_update_email
 from app.models import User, Score
@@ -52,6 +52,7 @@ def update_score():
     app.app_context().push()
     users = User.query.filter().all()
     for user in users:
+        time.sleep(60)
         up_score_list = []
         if user.school_number and user.identity:
             response_obj, status = login_cdut(user.school_number, user.identity)
