@@ -1,10 +1,14 @@
 <center><h4>公告</h4></center>
-<a href="{{ url_for('news_cdut.more') }}" class="more"><i class="glyphicon glyphicon-share-alt"></i> more +</a>
+<a href="{{ url_for('main.more') }}" class="more"><i class="glyphicon glyphicon-share-alt"></i> more +</a>
 <hr>
 
 
 {% for notice in notices %}
-    <li style="padding-bottom: 5px;font-size: 16px;"><a href="{{ url_for('personal.submit', announce_model_id=notice.id) }}">{{ notice.name }}</a></li>
+    {% if (datetime-notice.up_time).days > 1 %}
+        <li style="padding-bottom: 5px;font-size: 16px;"><a href="{{ url_for('personal.submit', announce_model_id=notice.id) }}">{{ notice.name }}</a></li>
+    {% else %}
+        <li style="padding-bottom: 5px;font-size: 16px;"><a href="{{ url_for('personal.submit', announce_model_id=notice.id) }}">{{ notice.name }} <span class="badge">新</span></a></a></li>
+    {% endif %}
 {% endfor %}
 
 

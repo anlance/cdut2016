@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <style>
+        .search{
+            width: 100%;
+            margin:0 auto;
+            text-align: center;
+        }
+        .search input{
+            margin-left:35px;
+        }
+        #myTitle{
+            font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+            font-size: x-large;
+            text-align: center;
+            font-weight: bold;
+        }
+        #inform{
+            font-size: 21px;
+        }
+    </style>
+
+    <br>
+    <div id="myTitle"><span class="glyphicon glyphicon-bullhorn" id="inform"></span> 公告</div>
+    <br><br>
+    <hr style="border-bottom: 2px dashed #0066CC;">
+    <br><br>
+    {% for announce in announces %}
+        <li style="padding-bottom: 5px"><a href="{{ url_for('personal.submit', announce_model_id=announce.id) }}" target="_blank">{{ announce.name }}<span style="float: right">{{ announce.up_time }}</span></a></li>
+    {% endfor %}
+
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> {{ _(' Newer news ') }}
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    {{ _(' Older news ') }} <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+

@@ -77,7 +77,7 @@ def alter_model(announceModel_id):
             form.name.data = announce_model.name
             form.info.data = announce_model.info
             form.item_num.data = announce_model.item_num
-        return render_template('manage/announce.html', title='管理中心', form=form)
+        return render_template('manage/announce.html', title='修改告', form=form)
 
 
 # 填写公告的具体excel表格信息

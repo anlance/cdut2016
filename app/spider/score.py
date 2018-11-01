@@ -24,13 +24,12 @@ def login_cdut(username, pwd):
     request_obj = urllib.request.Request(url=login_url, data=login_data)
     response = opener.open(request_obj)
 
-    print(response.status)
     target_url = 'http://202.115.133.173:805/SearchInfo/Score/ScoreList.aspx'
     request_obj = urllib.request.Request(target_url)
     try:
         response = opener.open(request_obj)
     except:
-        print('身份证或者学号错误')
+        return response, 404
     response_obj = response.read().decode()
     return response_obj, response.status
 

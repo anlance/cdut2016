@@ -4,6 +4,13 @@
     {% if title %}{{ title }}{% else %}{{ _('Welcome to anlance') }}{% endif %}
 {% endblock %}
 
+{% block head %}
+{{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+
 {% block scripts %}
 	{{ super() }}
 	{{ moment.include_moment() }}

@@ -15,6 +15,7 @@ from app import login, db
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    role = db.Column(db.Integer)
     username = db.Column(db.String(40))
     password = db.Column(db.String(160))
     email = db.Column(db.String(120), unique=True)
@@ -24,7 +25,7 @@ class User(UserMixin, db.Model):
     school_number = db.Column(db.String(50))
     deadtime_info = db.Column(db.String(140))
     deadtime_day = db.Column(db.DateTime)
-    role = db.Column(db.Integer)
+    score_num = db.Column(db.Integer)
     score = db.relationship("Score", backref="user")
     write = db.relationship("Announce", backref="user")
 

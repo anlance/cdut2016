@@ -1,0 +1,10 @@
+Dear {{ user.username }}
+
+    您有新的成绩出来了
+
+    {% for score in score_list %}
+         ---| {{ score.name }} | {{ score.grade }} | {{ score.type }} | {{ score.teacher }} |---
+    {% endfor %}
+
+Sincerely,
+The AnlanceClub Team

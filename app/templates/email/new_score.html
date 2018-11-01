@@ -1,0 +1,33 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+<p>Dear {{ user.username }},</p>
+<p>
+     您有新的成绩出来了
+</p>
+<p>
+    <table class="table table-bordered" >
+    <thead>
+    <tr>
+        <th>课程</th>
+        <th>分数</th>
+        <th>类型</th>
+        <th>老师</th>
+    </tr>
+    </thead>
+        <tbody>
+        <tr>
+            {% for score in score_list %}
+                <td>{{ score.name }}</td>
+                <td>{{ score.grade }}</td>
+                <td>{{ score.type }}</td>
+                <td>{{ score.teacher }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</p>
+<p>Sincerely,</p>
+<p>The AnlanceClub Team</p>
+
+{% endblock %}

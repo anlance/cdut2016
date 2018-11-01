@@ -8,6 +8,7 @@ from app.manage.form import SubmitForm
 from app.models import User, Score, AnnounceModel, Announce
 from app.personal import bp
 from app.personal.form import EditProfileForm, DeadtimeForm
+from app.spider.score import login_cdut, parse_stu_score
 
 
 @bp.route('/user/<username>')
@@ -27,10 +28,27 @@ def user(username):
 def edit_profile():
     form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
+        # 个人信息
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         current_user.identity = form.identity.data
         current_user.school_number = form.school_number.data
+        # score 初始化
+        all_score = Score.query.filter_by(user_id=current_user.id).all()
+        score_list = []
+        if len(all_score) == 0:
+            if current_user.school_number and current_user.identity:
+                response_obj, status = login_cdut(current_user.school_number, current_user.identity)
+                if status != 200:
+                    flash('身份证或者学号错误', 'warning')
+                else:
+                    score_list = parse_stu_score(response_obj, status)
+                    for one_score in score_list:
+                        one_score = Score(user_id=current_user.id, term=one_score[0], name=one_score[1], teacher=one_score[2],
+                                          credit=one_score[3],
+                                          grade=one_score[4], type=one_score[5], gpa=one_score[6], up_time=one_score[7])
+                        db.session.add(one_score)
+                current_user.score_num = len(score_list)
         db.session.commit()
         flash('修改成功.', 'success')
         return redirect(url_for('personal.user', username=current_user.username))

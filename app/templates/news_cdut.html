@@ -2,9 +2,16 @@
 <a href="{{ url_for('news_cdut.more') }}" class="more"><i class="glyphicon glyphicon-share-alt"></i> more +</a>
 <hr>
 
+<script>
+    var myDate = new Date();
+</script>
 
 {% for news in news_cdut %}
+    {% if (date-news.time).days > 3 %}
     <li style="padding-bottom: 5px"><a href="{{ news.origin_url }}" target="_blank">{{ news.info }}</a></li>
+    {% else %}
+    <li style="padding-bottom: 5px"><a href="{{ news.origin_url }}" target="_blank">{{ news.info }} <span class="badge">新</span></a></li>
+    {% endif %}
 {% endfor %}
 
 

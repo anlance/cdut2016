@@ -6,7 +6,7 @@ from flask import flash
 
 
 def get_today():
-    url = 'http://open.iciba.com/dsapi'
+    url = 'http://open.iciba.com/dsSSapi'
     response_obj = requests.get(url=url)
     if response_obj.status_code != 200:
         flash('每日英语官方api已发生变化，请管理员更改', 'warning')

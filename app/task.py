@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from app import db, create_app
+from app.auth.email import send_score_update_email
 from app.models import User, Score
 from app.news_cdut.models import NewsCdut
 from app.spider.cdut import init_news, update_news
@@ -45,23 +46,26 @@ def init():
     db.create_all(app=app)
     print('--init_cdut--')
     init_cdut()
-    print('--init_score--')
-    init_score()
 
 
-def init_score():
+def update_score():
     app.app_context().push()
     users = User.query.filter().all()
-    score_list = []
     for user in users:
+        up_score_list = []
         if user.school_number and user.identity:
-            print(user.identity)
-            print(user.school_number)
             response_obj, status = login_cdut(user.school_number, user.identity)
             score_list = parse_stu_score(response_obj, status)
-            for score in score_list:
-                score = Score(user_id=user.id, term=score[0], name=score[1], teacher=score[2], credit=score[3], grade=score[4], type=score[5], gpa=score[6], up_time=score[7])
-                db.session.add(score)
-                db.session.commit()
+            if len(score_list) > user.score_num:
+                i = 0
+                new_num = len(score_list) - user.score_num
+                while i < new_num:
+                    score = Score(user_id=user.id, term=score_list[i][0], name=score_list[i][1], teacher=score_list[i][2], credit=score_list[i][3], grade=score_list[i][4], type=score_list[i][5], gpa=score_list[i][6], up_time=score_list[i][7])
+                    # db.session.add(score)
+                    up_score_list.append(score)
+                    print(score)
+                    i += 1
+                send_score_update_email(user, up_score_list)
+            user.score_num = len(score_list)
+        db.session.commit()
 
-# init_score()
