@@ -17,7 +17,7 @@ class Config(object):
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
     MAIL_USERNAME = 'cdut@anlan.club'
-    MAIL_PASSWORD = 'yourpassowrd'
+    MAIL_PASSWORD = 'Uceng4teenager'
     #
     # LANGUAGES = ['en', 'zh-cn']POSTS_PER_PAGE = 3
     SCHEDULER_API_ENABLED = True

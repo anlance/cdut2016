@@ -1,5 +1,6 @@
 import re
-from datetime import datetime, time
+import time
+from datetime import datetime
 from app import db, create_app
 from app.auth.email import send_score_update_email
 from app.models import User, Score
@@ -51,8 +52,8 @@ def init():
 def update_score():
     app.app_context().push()
     users = User.query.filter().all()
+    print(datetime.now())
     for user in users:
-        time.sleep(60)
         up_score_list = []
         if user.school_number and user.identity:
             response_obj, status = login_cdut(user.school_number, user.identity)
@@ -62,7 +63,7 @@ def update_score():
                 new_num = len(score_list) - user.score_num
                 while i < new_num:
                     score = Score(user_id=user.id, term=score_list[i][0], name=score_list[i][1], teacher=score_list[i][2], credit=score_list[i][3], grade=score_list[i][4], type=score_list[i][5], gpa=score_list[i][6], up_time=score_list[i][7])
-                    # db.session.add(score)
+                    db.session.add(score)
                     up_score_list.append(score)
                     print(score)
                     i += 1

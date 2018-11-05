@@ -176,5 +176,5 @@ def del_manage(id):
     cur_manage = User.query.filter_by(id=id).first_or_404()
     cur_manage.set_role(0)
     db.session.commit()
-    flash(del_manage.username + '已经不是管理员', 'success')
+    flash(cur_manage.username + '已经不是管理员', 'success')
     return render_template('manage/allUser.html', user=user)
