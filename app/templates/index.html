@@ -27,24 +27,25 @@
         <br>
 
         <div class="row" style="height: 100%">
-            <div class="col-md-8" style="height: 100%">
+            <div class="col-xs-12 col-md-8" style="height: 100%">
                 <div class="row" style="height: 50%">
-                    <div class="col-md-6" style="height: 100%">
+                    <div class="col-xs-12 col-md-6" style="height: 100%">
                         <div class="myBoder">{% include 'news_cdut.html' %}</div>
                     </div>
-                    <div class="col-md-6 myBoder" style="height: 100%">
-                        {% include 'notice.html' %}
+                    <div class="col-xs-12 col-md-6" style="height: 100%">
+                        <div class="myBoder">{% include 'notice.html' %}</div>
                     </div>
                 </div>
                 <div class="row" style="height: 40%" >
-                     <div  class="col-md-6" style="margin-top: 10px; height: 100%">
+                     <div  class="col-xs-12 col-md-6" style="margin-top: 10px; height: 100%">
                          <div class="myBoder">{% include 'today.html' %}</div>
                      </div>
-                         <div id="today" class="col-md-6 myBoder" style="margin-top: 10px; height: 100%; ">
+                    <div class="col-xs-12 col-md-6" style="margin-top: 10px; height: 100%">
+                        <div id="today" class="myBoder"></div>
                      </div>
                 </div>
             </div>
-            <div class="col-md-4" style="height: 91%">
+            <div class="col-xs-12 col-md-4" style="height: 91%">
                 <div class="myBoder" style="position: relative">{% include 'discuss.html' %}</div>
             </div>
         </div>
