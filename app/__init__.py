@@ -1,9 +1,9 @@
 import logging
-from logging.handlers import SMTPHandler
+import os
+from logging.handlers import SMTPHandler, RotatingFileHandler
 
 from flask import Flask
 from flask_apscheduler import APScheduler
-from flask_babel import Babel
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -73,5 +73,16 @@ def create_app(config_class=Config):
                 credentials=auth, secure=secure)
             mail_handler.setLevel(logging.ERROR)
             app.logger.addHandler(mail_handler)
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        file_handler = RotatingFileHandler('logs/anlance.log', maxBytes=10240,
+                                           backupCount=10)
+        file_handler.setFormatter(logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('anlance startup')
     return app
 

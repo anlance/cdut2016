@@ -15,7 +15,7 @@ if not current_app.debug:
         mail_handler = SMTPHandler(
             mailhost=(current_app.config['MAIL_SERVER'], current_app.config['MAIL_PORT']),
             fromaddr='no-reply@' + current_app.config['MAIL_SERVER'],
-            toaddrs=app.config['ADMINS'], subject='Microblog Failure',
+            toaddrs=current_app.config['ADMINS'], subject='Anlance Failure',
             credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)
         current_app.logger.addHandler(mail_handler)
