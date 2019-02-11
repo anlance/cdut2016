@@ -49,17 +49,20 @@ def update_score():
         if user.school_number and user.identity:
             response_obj, status = login_cdut(user.school_number, user.identity)
             score_list = parse_stu_score(response_obj, status)
+            print(user.score_num)
+            print(len(score_list))
             if len(score_list) > user.score_num:
                 i = 0
                 new_num = len(score_list) - user.score_num
                 while i < new_num:
                     score = Score(user_id=user.id, term=score_list[i][0], name=score_list[i][1], teacher=score_list[i][2], credit=score_list[i][3], grade=score_list[i][4], type=score_list[i][5], gpa=score_list[i][6], up_time=score_list[i][7])
                     db.session.add(score)
+                    db.session.commit()
                     up_score_list.append(score)
-                    print(score)
+                    print(score.name)
+                    print(score.up_time)
                     i += 1
                 send_score_update_email(user, up_score_list)
             user.score_num = len(score_list)
-        db.session.commit()
 
 
