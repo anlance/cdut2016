@@ -2,12 +2,13 @@ from datetime import datetime
 
 from flask import render_template, flash, redirect, request, url_for, jsonify, json
 from flask_login import current_user, login_required
-
+import re
 from app import db
 from app.forms import DiscussForm
 from app.main import bp
 from app.models import User, Discuss, AnnounceModel
 from app.news_cdut.models import NewsCdut
+from app.spider.cdut import init_news
 from app.spider.today import get_today
 
 
@@ -24,13 +25,14 @@ def before_request():
 @login_required
 def index():
     discuss_form = DiscussForm()
-    news_cdut = NewsCdut.query.filter().order_by(NewsCdut.time.desc()).limit(5)
+    news_cduts, all_count = init_news()
+    news_cdut = news_cduts[-7:-1]
     notices = AnnounceModel.query.filter().order_by(AnnounceModel.up_time.desc()).limit(6)
     user_said = Discuss.query.filter(Discuss.id > 1).all()
     today = get_today()
-    thisdate = datetime.now().date()
+    thisdate = datetime.now()
     thisdatetime = datetime.now()
-    return render_template('index.html', title='Home Page', news_cdut=news_cdut, today=today, user_said=user_said, discuss_form=discuss_form, notices=notices, date=thisdate,datetime=thisdatetime)
+    return render_template('index.html', title='Home Page', news_cdut=news_cdut, today=today, user_said=user_said, discuss_form=discuss_form, notices=notices, date=thisdate,datetime=thisdatetime,re=re)
 
 
 @bp.route('/add_discuss',  methods=['POST'])

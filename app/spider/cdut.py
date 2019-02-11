@@ -1,3 +1,4 @@
+from datetime import datetime
 import re
 import requests
 from app.spider.spider_utils import get_int_from_str
@@ -39,23 +40,19 @@ def init_news():
     cur_news_num = all_count - len(news)
     for i in range(cur_news_num):
         news.append(cur_news[i])
-    print(len(news))
-    return news, all_count
 
-
-# 更新news
-def update_news(total):
-    url = 'http://www.aao.cdut.edu.cn/index/jwtz_gg.htm'
-    news = []
-    cur_news, sum = get_onepage(url=url)
-    if sum > total:
-        news_num_update = sum - total
-        print('--------')
-        for i in range(news_num_update):
-            news.append(cur_news[i])
-        print(sum)
-        print(total)
-    return news
+    url_news = []
+    for item in news:
+        url_head = 'http://www.aao.cdut.edu.cn/i'
+        days = re.sub('\D', '-', item[2]).rstrip('-')
+        url_tail = item[0]
+        url = url_head + url_tail.split('i')[-1]
+        url_new = []
+        url_new.append(url)
+        url_new.append(item[1])
+        url_new.append(item[2])
+        url_news.append(url_new)
+    return url_news, all_count
 
 
 # 得到一页的news
@@ -80,5 +77,5 @@ def get_onepage(url):
 
     return news, sum
 
-
+init_news()
 

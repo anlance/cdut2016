@@ -7,10 +7,10 @@
 </script>
 
 {% for news in news_cdut %}
-    {% if (date-news.time).days > 3 %}
-    <li style="padding-bottom: 5px"><a href="{{ news.origin_url }}" target="_blank">{{ news.info }}</a></li>
+    {% if (date-datetime.strptime(re.sub('\D', '-', news[2]).rstrip('-'), "%Y-%m-%d")).days > 3 %}
+    <li style="padding-bottom: 5px"><a href="{{ news[0] }}" target="_blank">{{ news[1] }}</a></li>
     {% else %}
-    <li style="padding-bottom: 5px"><a href="{{ news.origin_url }}" target="_blank">{{ news.info }} <span class="badge">新</span></a></li>
+    <li style="padding-bottom: 5px"><a href="{{ news[0] }}" target="_blank">{{ news[1] }} <span class="badge">新</span></a></li>
     {% endif %}
 {% endfor %}
 
