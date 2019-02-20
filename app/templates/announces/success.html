@@ -11,37 +11,61 @@
     </div>
 
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <table class="table table-bordered" style="font-size: 18px">
-              <center><caption>提交的信息</caption></center>
-              <thead>
-                <tr>
+        <div class="col-xs-1 col-md-1">
+        </div>
+        <div class="col-xs-10 col-md-10">
+            <span style="color: darkseagreen">提交的信息</span><br>
+                <div class="col-xs-4 col-md-5">
                     {% for item in announce_model %}
                         {% if not item[0] == None %}
-                            <th>{{ item[0] }}</th>
+                            <div class="write_t_div">
+                                <span class=" write_title">{{ item[0] }} :</span>
+                            </div>
+                            <br>
                         {% endif %}
                     {% endfor %}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {% for item in announce %}
-                      {% if not item == None %}
-                        <td>{{ item }}</td>
-                      {% endif %}
-                  {% endfor %}
-                </tr>
-              </tbody>
-            <br>
-            </table>
-            <div class="btn" style="background-color: lightgreen; margin-top: 10px">
+                </div>
+                <div class="col-xs-8 col-md-5">
+                    {% for item in announce %}
+                        {% if not item == None %}
+                            <div class="write_container">
+                                <span>{{ item }}</span>
+                                <br>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    <div class="btn" style="background-color: lightgreen; margin-top: 10px">
                 <span class="glyphicon glyphicon-arrow-left" style="font-size: 16px"></span>
                 <a href="{{ url_for('personal.aleter', announce_id=announce.id) }}" style="font-size: 16px">修改表单内容</a>
             </div><br><br>
             <span style="margin-top: 10px"><i style="color: red;">tips</i>: 已经禁用浏览器的后退功能</span>
-        </div>
-    </div>
+
+
+    <style>
+        .write_t_div {
+            width: 100%;
+            margin-top: 0px;
+            height: 40px;
+            margin-top: 0px;
+            float: right;
+            text-align: right;
+            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+            font-weight: bold;
+        }
+
+        .write_title {
+            padding-top: 2px;
+            font-size: 1.4vw;
+        }
+
+        .write_container {
+            margin-top: 0px;
+            height: 40px;
+        }
+    </style>
 {% endblock %}
 
 
