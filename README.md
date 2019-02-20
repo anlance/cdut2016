@@ -5,7 +5,7 @@
 #### 项目结构
 
 
-![结构](https://github.com/anlance/cdut2016/cdut2016.png)
+![结构](https://github.com/anlance/cdut2016/blob/master/cdut2016.png)
 
 #### 功能特性
 
