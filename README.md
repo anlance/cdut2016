@@ -5,43 +5,7 @@
 #### 项目结构
 
 
-├─app
-│  ├─auth                                   //个人
-│  │ 
-│  ├─errors                                 //网络错误处理
-│  │  
-│  ├─main                                   //主要
-│  │  
-│  ├─manage                                 //管理中心
-│  │        
-│  ├─news_cdut                              //理工通知
-│  │  
-│  ├─personal                               //个人中心
-│  │  
-│  ├─spider                                 //爬虫
-│  │  
-│  ├─static                                 //静态文件
-│  │  ├─css
-│  │  └─img
-│  ├─templates                              //html模板
-│  │  ├─announces
-│  │  ├─auth
-│  │  ├─email
-│  │  ├─errors
-│  │  ├─manage
-│  │  ├─news_cdut
-│  │  └─personal
-│  └─__pycache__
-│ 
-├─logs                                      //日志
-│                        
-├─cdut2016.py                               //启动入口
-│ 
-├─config.py                                 //配置
-│ 
-├─README.MD                                 //README
-│ 
-└─requirements.txt                          //包
+![结构](https://github.com/anlance/cdut2016/cdut2016.png)
 
 #### 功能特性
 
