@@ -20,4 +20,4 @@ v1.1 最终版本
 - [x] 表单手机更加方便，表单字体适配
 
 #### 部署
-参考[this](!https://blog.csdn.net/weixin_38256474/article/details/82185100)
+参考 [this](https://blog.csdn.net/weixin_38256474/article/details/82185100)
