@@ -32,3 +32,6 @@ v1.1 最终版本
 #### 更新
 * 首先备份了数据库，但在更新时出现了问题，怎么也更新不了，于是先用`netstat -lnp|grep 8000`
 查看是哪个进程占用了8000端口，然后用`ps pid`杀死了该进程;再重新启动项目，并把之前备份的数据恢复。
+
+#### 课程设计文档
+* [cdut2016](https://github.com/anlance/anlance/blob/master/file/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1.doc)
